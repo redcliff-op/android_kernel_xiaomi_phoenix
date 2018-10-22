@@ -519,4 +519,6 @@ TRACE_EVENT(sched_load_to_gov,
 		__entry->nt_ps, __entry->grp_nt_ps, __entry->pl, __entry->load,
 		__entry->big_task_rotation, __entry->user_hint)
 );
+#else
+#define trace_sched_load_balance_skip_tasks(...)
 #endif
