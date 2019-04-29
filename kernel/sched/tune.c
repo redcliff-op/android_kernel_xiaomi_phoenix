@@ -521,8 +521,7 @@ int schedtune_task_boost_rcu_locked(struct task_struct *p)
 
 	/* Get task boost value */
 	st = task_schedtune(p);
-	task_boost = st->boost;
-
+	task_boost = st->boost || schedtune_adj_ta(st, p);
 	return task_boost;
 }
 
