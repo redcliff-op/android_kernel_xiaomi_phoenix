@@ -10,6 +10,7 @@
 
 enum df_device {
 	DEVFREQ_MSM_CPUBW,
+	DEVFREQ_MSM_LLCCBW,
 	DEVFREQ_MAX
 };
 
