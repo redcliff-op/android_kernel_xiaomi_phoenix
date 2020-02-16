@@ -132,8 +132,7 @@ config TRACING
 	select TRACE_CLOCK
 
 config GENERIC_TRACER
-	bool
-	select TRACING
+	bool "Generic Tracer"
 
 #
 # Minimum requirements an architecture has to meet for us to
