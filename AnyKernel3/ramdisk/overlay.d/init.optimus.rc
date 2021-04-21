@@ -1,0 +1,10 @@
+on boot
+    # Set LMKD props
+    setprop ro.lmk.use_psi true
+    setprop ro.lmk.low 1001
+    setprop ro.lmk.medium 800
+    setprop ro.lmk.critical 0
+    setprop ro.lmk.critical_upgrade false
+    setprop ro.lmk.upgrade_pressure 100
+    setprop ro.lmk.downgrade_pressure 100
+    setprop ro.lmk.kill_heaviest_task true
