@@ -121,7 +121,6 @@
 #define F12_WAKEUP_GESTURE_MODE 0x02
 #define F12_UDG_DETECT 0x0f
 
-static bool gesture_delay = false;
 static int synaptics_rmi4_check_status(struct synaptics_rmi4_data *rmi4_data,
 		bool *was_in_bl_mode);
 static int synaptics_rmi4_free_fingers(struct synaptics_rmi4_data *rmi4_data);
@@ -889,12 +888,9 @@ static ssize_t synaptics_rmi4_wake_gesture_store(struct device *dev,
 		return -EINVAL;
 
 	input = input > 0 ? 1 : 0;
-        
-        if (rmi4_data->suspend && input != rmi4_data->enable_wakeup_gesture)
-		gesture_delay = true;
 
 	if (rmi4_data->f11_wakeup_gesture || rmi4_data->f12_wakeup_gesture)
-                synaptics_gesture_func_on = rmi4_data->enable_wakeup_gesture = input;
+		rmi4_data->enable_wakeup_gesture = input;
 
 	return count;
 }
