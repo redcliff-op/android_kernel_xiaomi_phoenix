@@ -26,6 +26,16 @@
 #include "dsi_parser.h"
 
 #include <linux/double_click.h>
+#include "dsi_drm.h"
+#include "dsi_display.h"
+#include "sde_crtc.h"
+#include "sde_rm.h"
+#include "sde_trace.h"
+
+#ifdef CONFIG_KLAPSE
+#include "../sde/klapse.h"
+#endif
+
 
 /**
  * topology is currently defined by a set of following 3 values:
@@ -923,6 +933,10 @@ int dsi_panel_set_backlight(struct dsi_panel *panel, u32 bl_lvl)
 		pr_err("Backlight type(%d) not supported\n", bl->type);
 		rc = -ENOTSUPP;
 	}
+
+#ifdef CONFIG_KLAPSE
+	set_rgb_slider(bl_lvl);
+#endif
 
 	panel->last_bl_lvl = bl_lvl;
 
