@@ -613,6 +613,7 @@ config CHARGER_RT9455
 
 config K6_CHARGE
 	bool
+	prompt "K6 (sweet) specific power supply modifications"
 	help
 	  Say Y to enable Xiaomi Redmi Note 10 Pro (K6/sweet) specific
 	  modifications.
