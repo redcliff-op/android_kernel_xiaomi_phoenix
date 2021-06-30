@@ -1,5 +1,4 @@
 /* Copyright (c) 2009-2020, The Linux Foundation. All rights reserved.
- * Copyright (C) 2021 XiaoMi, Inc.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -28,18 +27,10 @@
 
 #define SDE_DBG_BASE_MAX		10
 
-#ifdef CONFIG_DRM_SDE_XLOG_DEBUG
 #define DEFAULT_PANIC		1
 #define DEFAULT_REGDUMP		SDE_DBG_DUMP_IN_MEM
 #define DEFAULT_DBGBUS_SDE	SDE_DBG_DUMP_IN_MEM
 #define DEFAULT_DBGBUS_VBIFRT	SDE_DBG_DUMP_IN_MEM
-#else
-#define DEFAULT_PANIC		0
-#define DEFAULT_REGDUMP		SDE_DBG_DUMP_IN_LOG
-#define DEFAULT_DBGBUS_SDE	SDE_DBG_DUMP_IN_LOG
-#define DEFAULT_DBGBUS_VBIFRT	SDE_DBG_DUMP_IN_LOG
-#endif
-
 #define DEFAULT_BASE_REG_CNT	0x100
 #define GROUP_BYTES		4
 #define ROW_BYTES		16
@@ -4175,7 +4166,7 @@ void sde_dbg_ctrl(const char *name, ...)
 	va_end(args);
 }
 
-
+#ifdef CONFIG_DEBUG_FS
 /*
  * sde_dbg_debugfs_open - debugfs open handler for evtlog dump
  * @inode: debugfs inode
@@ -5140,6 +5131,15 @@ int sde_dbg_debugfs_register(struct device *dev)
 
 	return 0;
 }
+
+#else
+
+int sde_dbg_debugfs_register(struct device *dev)
+{
+	return 0;
+}
+
+#endif
 
 static void _sde_dbg_debugfs_destroy(void)
 {

@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2015-2020 The Linux Foundation. All rights reserved.
- * Copyright (C) 2021 XiaoMi, Inc.
  * Copyright (C) 2013 Red Hat
  * Author: Rob Clark <robdclark@gmail.com>
  *
@@ -306,7 +305,6 @@ struct sde_crtc {
 
 	/* blob for histogram data */
 	struct drm_property_blob *hist_blob;
-	bool is_primary_sde_crtc;
 };
 
 #define to_sde_crtc(x) container_of(x, struct sde_crtc, base)
@@ -422,6 +420,7 @@ struct sde_crtc_state {
 	uint64_t input_fence_timeout_ns;
 	uint32_t num_dim_layers;
 	struct sde_hw_dim_layer dim_layer[SDE_MAX_DIM_LAYERS];
+	struct sde_hw_dim_layer *fod_dim_layer;
 	uint32_t num_ds;
 	uint32_t num_ds_enabled;
 	bool ds_dirty;
@@ -438,9 +437,6 @@ struct sde_crtc_state {
 	u32 padding_active;
 	u32 padding_dummy;
 
-	bool finger_down;
-	bool dim_layer_status;
-	struct sde_hw_dim_layer *fingerprint_dim_layer;
 	struct sde_crtc_respool rp;
 };
 
@@ -577,14 +573,6 @@ void sde_crtc_prepare_commit(struct drm_crtc *crtc,
  */
 void sde_crtc_complete_commit(struct drm_crtc *crtc,
 		struct drm_crtc_state *old_state);
-
-/**
- * sde_crtc_fod_ui_ready - callback to notify fod ui ready message
- * @crtc: Pointer to drm crtc object
- * @old_state: Pointer to drm crtc old state object
- */
-//void sde_crtc_fod_ui_ready(struct drm_crtc *crtc,
-//		struct drm_crtc_state *old_state);
 
 /**
  * sde_crtc_init - create a new crtc object
@@ -871,7 +859,5 @@ int sde_crtc_calc_vpadding_param(struct drm_crtc_state *state,
  */
 int sde_crtc_get_num_datapath(struct drm_crtc *crtc,
 		struct drm_connector *connector);
-
-uint32_t sde_crtc_get_mi_fod_sync_info(struct sde_crtc_state *cstate);
 
 #endif /* _SDE_CRTC_H_ */
