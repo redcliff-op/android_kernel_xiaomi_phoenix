@@ -1,7 +1,27 @@
+echo checking for repo update
+git config pull.rebase false
+git pull
+
+#clone or update clang if its alreay exists
+set -e
+
+if [ -r clang ]; then
+  echo clang found!
+  cd clang
+  git config pull.rebase false
+  cd ..
+  
+
+else
+  echo clang not found!, git cloning it now....
+  git clone --depth=1 https://github.com/kdrag0n/proton-clang.git clang
+
+fi
+
 KERNEL_DEFCONFIG=phoenix_defconfig
 ANYKERNEL3_DIR=$PWD/AnyKernel3/
 KERNELDIR=$PWD/
-FINAL_KERNEL_ZIP=Redcliff_2.0.zip
+FINAL_KERNEL_ZIP=Redcliff_v2.12X.zip
 export PATH="${PWD}/clang/bin:${PATH}"
 export ARCH=arm64
 export SUBARCH=arm64
