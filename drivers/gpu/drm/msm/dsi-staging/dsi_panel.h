@@ -271,6 +271,7 @@ struct dsi_panel {
 	u32 dc_threshold;
 	u32 dc_type;
 	bool resend_dc;
+	int cabc_mode;
 };
 
 static inline bool dsi_panel_ulps_feature_enabled(struct dsi_panel *panel)
@@ -402,5 +403,7 @@ u32 dsi_panel_get_fod_dim_alpha(struct dsi_panel *panel);
 int dsi_panel_apply_hbm_mode(struct dsi_panel *panel);
 
 int dsi_panel_apply_dc_mode(struct dsi_panel *panel);
+
+int dsi_panel_apply_cabc_mode(struct dsi_panel *panel);
 
 #endif /* _DSI_PANEL_H_ */

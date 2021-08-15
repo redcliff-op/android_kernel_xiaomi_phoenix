@@ -5247,17 +5247,57 @@ error:
 	return ret == 0 ? count : ret;
 }
 
+static ssize_t sysfs_cabc_read(struct device *dev,
+		struct device_attribute *attr, char *buf)
+{
+	struct dsi_display *display = dev_get_drvdata(dev);
+	if (!display->panel)
+		return 0;
+
+	return scnprintf(buf, PAGE_SIZE, "%d\n", display->panel->cabc_mode);
+}
+
+static ssize_t sysfs_cabc_write(struct device *dev,
+	    struct device_attribute *attr, const char *buf, size_t count)
+{
+	struct dsi_display *display = dev_get_drvdata(dev);
+	int ret, cabc_mode;
+
+	if (!display->panel)
+		return -EINVAL;
+
+	ret = kstrtoint(buf, 10, &cabc_mode);
+	if (ret) {
+		pr_err("kstrtoint failed. ret=%d\n", ret);
+		return ret;
+	}
+
+	mutex_lock(&display->display_lock);
+
+	display->panel->cabc_mode = cabc_mode;
+	if (!dsi_panel_initialized(display->panel))
+		goto error;
+
+	ret = dsi_panel_apply_cabc_mode(display->panel);
+	if (ret)
+		pr_err("unable to set cabc mode\n");
+
+error:
+	mutex_unlock(&display->display_lock);
+	return ret == 0 ? count : ret;
+}
+
 static DEVICE_ATTR(doze_status, 0644,
-			sysfs_doze_status_read,
-			sysfs_doze_status_write);
+                        sysfs_doze_status_read,
+                        sysfs_doze_status_write);
 
 static DEVICE_ATTR(doze_mode, 0444,
-			sysfs_doze_mode_read,
-			NULL);
+                        sysfs_doze_mode_read,
+                        NULL);
 
 static DEVICE_ATTR(fod_ui, 0444,
-			sysfs_fod_ui_read,
-			NULL);
+                        sysfs_fod_ui_read,
+                        NULL);
 
 static DEVICE_ATTR(hbm, 0644,
 			sysfs_hbm_read,
@@ -5267,12 +5307,17 @@ static DEVICE_ATTR(dc_enable, 0644,
 			sysfs_dc_enable_read,
 			sysfs_dc_enable_write);
 
+static DEVICE_ATTR(cabc, 0644,
+			sysfs_cabc_read,
+			sysfs_cabc_write);
+
 static struct attribute *display_fs_attrs[] = {
 	&dev_attr_doze_status.attr,
 	&dev_attr_doze_mode.attr,
 	&dev_attr_fod_ui.attr,
 	&dev_attr_hbm.attr,
 	&dev_attr_dc_enable.attr,
+	&dev_attr_cabc.attr,
 	NULL,
 };
 static struct attribute_group display_fs_attrs_group = {
