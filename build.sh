@@ -1,3 +1,6 @@
+# Cleanup Out dir
+rm -rf out
+
 #clone or update clang if its alreay exists
 set -e
 
