@@ -1711,6 +1711,10 @@ cont:
 		if (!page)
 			continue;
 
+		if(PageTail(page)) {
+			continue;
+		}
+
 		if (isolate_lru_page(page))
 			continue;
 
