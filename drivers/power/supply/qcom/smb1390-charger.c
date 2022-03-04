@@ -962,7 +962,7 @@ static int smb1390_probe(struct platform_device *pdev)
 		goto out_class;
 	}
 
-	pr_info("smb1390 probed successfully");
+	pr_debug("smb1390 probed successfully");
 	return 0;
 
 out_class:

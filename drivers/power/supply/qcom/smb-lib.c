@@ -30,14 +30,7 @@
 		__func__, ##__VA_ARGS__)	\
 
 #define smblib_dbg(chg, reason, fmt, ...)			\
-	do {							\
-		if (*chg->debug_mask & (reason))		\
-			pr_info("%s: %s: " fmt, chg->name,	\
-				__func__, ##__VA_ARGS__);	\
-		else						\
-			pr_debug("%s: %s: " fmt, chg->name,	\
-				__func__, ##__VA_ARGS__);	\
-	} while (0)
+	do {} while (0)
 
 static bool is_secure(struct smb_charger *chg, int addr)
 {
@@ -782,7 +775,7 @@ void smblib_suspend_on_debug_battery(struct smb_charger *chg)
 	vote(chg->usb_icl_votable, DEBUG_BOARD_VOTER, val.intval, 0);
 	vote(chg->dc_suspend_votable, DEBUG_BOARD_VOTER, val.intval, 0);
 	if (val.intval)
-		pr_info("Input suspended: Fake battery\n");
+		pr_debug("Input suspended: Fake battery\n");
 }
 
 int smblib_rerun_apsd_if_required(struct smb_charger *chg)
