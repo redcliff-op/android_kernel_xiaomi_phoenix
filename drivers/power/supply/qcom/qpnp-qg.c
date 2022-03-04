@@ -673,7 +673,7 @@ static int qg_vbat_low_wa(struct qpnp_qg *chip)
 		for (i = 0; i < chip->kdata.fifo_length; i++) {
 			if (chip->kdata.fifo[i].v > vbat_low_uv) {
 				chip->vbat_low = false;
-				pr_info("Exit VBAT_LOW vbat_avg=%duV vbat_low=%duV updated fifo_length=%d\n",
+				pr_debug("Exit VBAT_LOW vbat_avg=%duV vbat_low=%duV updated fifo_length=%d\n",
 					chip->kdata.fifo[i].v, vbat_low_uv,
 					chip->dt.s2_fifo_length);
 				break;
@@ -2065,7 +2065,7 @@ static int qg_get_ffc_iterm_for_qg(struct qpnp_qg *chip)
 	} else {
 		ffc_qg_iterm = FFC_BATT_FULL_CURRENT;
 	}
-	pr_info("ffc_batt_full_current=%d\n", ffc_qg_iterm);
+	pr_debug("ffc_batt_full_current=%d\n", ffc_qg_iterm);
 
 	return ffc_qg_iterm;
 }
@@ -3222,7 +3222,7 @@ static int qg_load_battery_profile(struct qpnp_qg *chip)
 
 		if (chip->temp_comp_cfg_valid) {
 			for (i = 0; i < tuple_len; i++)
-				pr_info("Ibat_low: %d Ibat_high: %d comp_value: %d\n",
+				pr_debug("Ibat_low: %d Ibat_high: %d comp_value: %d\n",
 				chip->temp_comp_cfg[i].low_threshold,
 				chip->temp_comp_cfg[i].high_threshold,
 				chip->temp_comp_cfg[i].value);
@@ -3481,7 +3481,7 @@ done:
 	if (rc < 0)
 		pr_err("Failed to update sdam params rc=%d\n", rc);
 
-	pr_info("using %s @ PON ocv_uv=%duV soc=%d\n",
+	pr_debug("using %s @ PON ocv_uv=%duV soc=%d\n",
 			ocv_type, ocv_uv, chip->msoc);
 
 	/* SOC reporting is now ready */
@@ -4479,7 +4479,7 @@ static void calculate_average_current(struct qpnp_qg *chip)
 	}
 
 unchanged:
-	pr_info("current_now_ma = %d, averaged_iavg_ma = %d\n",
+	pr_debug("current_now_ma = %d, averaged_iavg_ma = %d\n",
 			chip->param.batt_ma, chip->param.batt_ma_avg);
 }
 
@@ -4525,7 +4525,7 @@ static void qg_battery_soc_smooth_tracking(struct qpnp_qg *chip)
 
 	soc_changed = min(1, delta_time);
 
-	pr_info("soc:%d, last_soc:%d, raw_soc:%d, soc_changed:%d, update_now:%d, charge_status:%d, batt_ma:%d\n",
+	pr_debug("soc:%d, last_soc:%d, raw_soc:%d, soc_changed:%d, update_now:%d, charge_status:%d, batt_ma:%d\n",
 			chip->param.batt_soc, last_batt_soc, chip->param.batt_raw_soc, soc_changed, chip->param.update_now,
 			chip->charge_status, chip->param.batt_ma);
 
@@ -5101,7 +5101,7 @@ static int qpnp_qg_probe(struct platform_device *pdev)
 	schedule_delayed_work(&chip->force_shutdown_work, msecs_to_jiffies(URGENT_DELAY_MS));
 
 	qg_get_battery_capacity(chip, &soc);
-	pr_info("QG initialized! battery_profile=%s SOC=%d QG_subtype=%d\n",
+	pr_debug("QG initialized! battery_profile=%s SOC=%d QG_subtype=%d\n",
 			qg_get_battery_type(chip), soc, chip->qg_subtype);
 
 	return rc;

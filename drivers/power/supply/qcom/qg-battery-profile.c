@@ -493,7 +493,7 @@ int qg_batterydata_init(struct device_node *profile_node)
 		goto destroy_device;
 	}
 
-	pr_info("QG Battery-profile loaded\n");
+	pr_debug("QG Battery-profile loaded\n");
 
 	return 0;
 

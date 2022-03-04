@@ -874,7 +874,7 @@ static int handle_jeita(struct step_chg_info *chip)
 			return rc;
 		}
 		batt_soc = pval.intval;
-		pr_info("%s:batt_soc=%d\n", __func__, batt_soc);
+		pr_debug("%s:batt_soc=%d\n", __func__, batt_soc);
 		rc = power_supply_get_property(chip->bms_psy,
 				POWER_SUPPLY_PROP_FASTCHARGE_MODE, &pval);
 		pr_err("%s:fastcharge_mode=%d\n", __func__, pval.intval);
@@ -900,7 +900,7 @@ static int handle_jeita(struct step_chg_info *chip)
 						rc = power_supply_set_property(chip->batt_psy,
 								POWER_SUPPLY_PROP_CHARGE_TERM_CURRENT, &pval);
 				}
-				pr_info("batt_temp = %d, ffc_chg_term_current=%d\n", batt_temp, chg_term_current);
+				pr_debug("batt_temp = %d, ffc_chg_term_current=%d\n", batt_temp, chg_term_current);
 			}
 		}
 	}
