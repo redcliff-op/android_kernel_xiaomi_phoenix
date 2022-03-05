@@ -2,8 +2,20 @@ echo checking for repo update
 git config pull.rebase false
 git pull
 
-#clone or update clang if its alreay exists
+#clone or update clang and AnyKernel3 if its alreay exists
 set -e
+
+if [ -r AnyKernel3 ]; then
+  echo AnyKernel3 found!
+  cd AnyKernel3
+  git config pull.rebase false
+  cd ..
+
+else
+  echo AnyKernel3 not found, Cloning it now
+  git clone https://github.com/redcliff-op/AnyKernel3.git
+
+fi
 
 if [ -r clang ]; then
   echo clang found!
