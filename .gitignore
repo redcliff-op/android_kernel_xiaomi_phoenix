@@ -134,3 +134,6 @@ Android.bp
 # out and clang
 out/
 clang/
+
+# AnyKernel
+AnyKernel3/
