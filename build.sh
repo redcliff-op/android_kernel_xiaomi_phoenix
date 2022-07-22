@@ -33,7 +33,7 @@ fi
 KERNEL_DEFCONFIG=phoenix_defconfig
 ANYKERNEL3_DIR=$PWD/AnyKernel3/
 KERNELDIR=$PWD/
-FINAL_KERNEL_ZIP=Redcliff-v3.2.5-phoenix.zip
+FINAL_KERNEL_ZIP=Redcliff-v3.2.6-phoenix.zip
 export PATH="${PWD}/clang/bin:${PATH}"
 export ARCH=arm64
 export SUBARCH=arm64
